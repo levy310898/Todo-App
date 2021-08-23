@@ -1,0 +1,5 @@
+{
+  "mongoURL":"mongodb+srv://levy:peevy001@devconnector.1mfgf.mongodb.net/todoApp?retryWrites=true&w=majority",
+  "accessTokenSecret":"yahalooo123331",
+  "expireTime":86400
+}
