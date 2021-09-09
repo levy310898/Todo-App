@@ -63,17 +63,19 @@ router.post('/login',
   body('email').isEmail(),
   body('password').isLength({ min: 8 }),
   async (req, res) => {
+    
     // checking validator
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ success: false, message: errors.array() });
     }
 
-    const { email, password } = req.body
+    const { email, password } = req.body;
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ success: false, message: 'Incorrect email !!!' });
+        return res.status(400).json({ success: false, message: 'email or password was wrong !!!' });
       }
 
       // email valid
@@ -81,7 +83,7 @@ router.post('/login',
       const passwordVerify = await argon2.verify(user.password, password);
 
       if (!passwordVerify) {
-        return res.status(400).json({ success: false, message: 'Incorrect password!!!' });
+        return res.status(400).json({ success: false, message: 'email or password was wrong !!!' });
       }
 
       // password valid, all good
@@ -92,9 +94,26 @@ router.post('/login',
         (err, accessToken) => {
           if (err) throw (err)
           else {
-            return res.status(200).json({ success: true, message: 'register success', accessToken })
+            return res.status(200).json({ success: true, message: 'login success!!!', accessToken })
           }
         })
+    } catch (error) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+  }
+)
+
+//@route GET /api/auth
+//@desc check user is logged in
+//@access : private
+
+router.get('/',authToken, async (req, res) => {
+
+    // checking validator
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) return res.status(400).json({ success: false, message: "user not found!" });
+    return res.json({success:true,user})
     } catch (error) {
       return res.status(500).json({ success: false, message: error.message });
     }

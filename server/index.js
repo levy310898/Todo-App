@@ -1,7 +1,12 @@
 const express = require('express')
 const connectDb = require('./config/db');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const cors = require('cors'); // for frontend development to call api if they in localhost
 app = express()
+
+
+// cors 
+app.use(cors());
 
 // bodyParser json
 app.use(bodyParser.json())
