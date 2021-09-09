@@ -11,11 +11,11 @@ Content-Type: application/json
 
 POST http://localhost:5000/api/project
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjExZmYwMWU0MTUxNDEyMDUyNTkzNzI0IiwidXNlciI6ImxlIHZ5In0sImlhdCI6MTYyOTUzNDQzMiwiZXhwIjoxNjI5NjIwODMyfQ.euJIzZ9B4BtRNW0CrWJCIjpckHP2Xw5nLwszF55ukXs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzMjMxNDIyN2M2OTY0NjMwMzdhYTkxIiwidXNlciI6ImxlIHZ5In0sImlhdCI6MTYzMTE4MDIxNywiZXhwIjoxNjMyMDQ0MjE3fQ.O1wZkbsyHHa4SfB3l2LOhv4BC7zMrFUungpbISNqDKU
 
 {
-  "title":"title 2",
-  "description":"something to test"
+  "title":"project 1",
+  "description":"building thing"
 }
 
 ###

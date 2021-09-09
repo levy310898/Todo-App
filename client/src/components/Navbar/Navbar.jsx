@@ -52,7 +52,7 @@ export default function ButtonAppBar() {
 
   const handleLogout = () => {
     logoutUser();
-    history.push('/login');
+    // history.push('/login');
   }
 
   // return focus to the button when we transitioned from !open -> open
@@ -68,7 +68,7 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
