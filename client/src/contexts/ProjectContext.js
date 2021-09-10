@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react'
+import React, { createContext, useReducer } from 'react'
 import axios from 'axios';
 import { apiUrl } from './constant';
 import { projectReducer } from 'reducers/projectReducer';
@@ -53,7 +53,20 @@ export default function ProjectProvider({ children }) {
 
   }
 
+  const deleteProject = async (id) => {
+    try {
+      const response = await axios.delete(`${apiUrl}/project/${id}`);
+      if (response.data.success) {
+        return response.data
+      }
+    } catch (error) {
+      if (error.response.data) console.log(error.response.data);
+      else return { success: false, message: 'something wrong' };
+    }
+
+  }
+
   return (
-    <ProjectContext.Provider value={{ projectState, getAllProject, addProject, updateProject }}>{children}</ProjectContext.Provider>
+    <ProjectContext.Provider value={{ projectState, getAllProject, addProject, updateProject, deleteProject }}>{children}</ProjectContext.Provider>
   )
 }

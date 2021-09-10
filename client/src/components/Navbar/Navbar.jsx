@@ -15,7 +15,6 @@ import MenuList from '@material-ui/core/MenuList';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { useContext } from 'react';
 import { AuthContext } from 'contexts/AuthContext';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,8 +31,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const { authState:{user},logoutUser } = useContext(AuthContext);
   const classes = useStyles();
-
-  const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);

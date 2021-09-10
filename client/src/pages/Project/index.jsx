@@ -1,4 +1,4 @@
-import { Container,Typography } from '@material-ui/core'
+import { Container } from '@material-ui/core'
 import React,{useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { useContext } from 'react';
@@ -9,8 +9,8 @@ import ProjectItem from './ProjectItem';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditProjectModal from './EditProjectModal';
-import { useState } from 'react';
 import { useRef } from 'react';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 const useStyles = makeStyles({
   root: {
@@ -30,35 +30,37 @@ export default function ProjectPage() {
 
   const modalRef = useRef();
 
-  console.log('modal ref = ', modalRef);
-
-  const [open, setOpen] = useState(false);
-
-  const [data, setData] = useState({ title: "", description:""})
+  const confirmRef = useRef();
 
   const { projectState:{project,loading}, getAllProject } = useContext(ProjectContext);
-  useEffect(() => {
-    getAllProject();
-  }, [])
+  useEffect(() =>getAllProject()
+  ,[])
 
-  console.log('project = ', project);
   return (
     <>
       <Container className={classes.root}>
-        {loading ? <loading /> :
-          !project || project.length == 0 ? "no project is here" :
+        {loading ? <Loading /> :
+          !project || project.length === 0 ? "no project is here" :
             <Grid container spacing={3}>
-              {project.map(item => <Grid item xs={12} sm = {6} md = {4} lg = {3}><ProjectItem {...item} handleOpenModal={modalRef.current ? modalRef.current.handleOpen : () => console.log('hello')}/></Grid>)}
+              {project.map(item => <Grid item xs={12} sm={6} md={4} lg={3}>
+                <ProjectItem
+                  {...item}
+                  handleOpenModal={modalRef.current ? modalRef.current.handleOpen : () => { }}
+                  handleDelete = {confirmRef.current ? confirmRef.current.handleOpen : ()=>{}}
+                />
+              </Grid>)}
             </Grid>
 
         }
         {/* modalRef.current.handleOpen */}
-        <Fab color="primary" aria-label="add" className={classes.addButton} onClick={modalRef.current ? modalRef.current.handleOpen:()=>console.log('hello')}>
+        <Fab color="primary" aria-label="add" className={classes.addButton} onClick={modalRef.current ? modalRef.current.handleOpen:()=>{}}>
           <AddIcon />
         </Fab>
       </Container>
 
-      <EditProjectModal open={open} setOpen={setOpen} data={data} ref={modalRef}/>
+      <EditProjectModal ref={modalRef} />
+      
+      <ConfirmDeleteModal ref={confirmRef}/>
     </>
     
   )

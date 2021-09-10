@@ -1,4 +1,4 @@
-import { Paper,Grid,Avatar, CircularProgress } from '@material-ui/core'
+import { Paper,Grid,Avatar } from '@material-ui/core'
 import React,{useContext} from 'react'
 import LoginForm from './Login'
 import RegisterForm from './Register'
@@ -29,9 +29,9 @@ export default function AuthPage({route}) {
               <h2>{route}</h2>
             </Grid>
 
-            {route == 'login' && <LoginForm />}
+            {route === 'login' && <LoginForm />}
 
-            {route == 'register' && <RegisterForm />}
+            {route === 'register' && <RegisterForm />}
 
           </div>
         </Paper>
