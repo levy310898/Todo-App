@@ -27,7 +27,33 @@ export default function ProjectProvider({ children }) {
     
   }
 
+  const addProject = async (data) => {
+    try {
+      const response = await axios.post(`${apiUrl}/project`, data);
+      if (response.data.success) {
+        return response.data
+      }
+    } catch (error) {
+      if (error.response.data) console.log(error.response.data);
+      else return { success: false, message: 'something wrong' };
+    }
+    
+  }
+
+  const updateProject = async (id,data) => {
+    try {
+      const response = await axios.put(`${apiUrl}/project/${id}`, data);
+      if (response.data.success) {
+        return response.data
+      }
+    } catch (error) {
+      if (error.response.data) console.log(error.response.data);
+      else return { success: false, message: 'something wrong' };
+    }
+
+  }
+
   return (
-    <ProjectContext.Provider value={{ projectState, getAllProject }}>{children}</ProjectContext.Provider>
+    <ProjectContext.Provider value={{ projectState, getAllProject, addProject, updateProject }}>{children}</ProjectContext.Provider>
   )
 }

@@ -21,8 +21,7 @@ function LoginForm() {
       <Formik
 
         initialValues={{ email: '', password: '' }}
-        onSubmit={ async (values, props) => {
-          console.log('value before submit = ', values);
+        onSubmit={ async (values, _) => {
           const response = await loginUser(values);
           if (response.success) {
             

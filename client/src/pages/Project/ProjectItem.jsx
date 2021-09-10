@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard({title,description}) {
+export default function MediaCard({_id,title,description,handleOpenModal}) {
   const classes = useStyles();
 
   return (
@@ -33,7 +33,7 @@ export default function MediaCard({title,description}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick = {()=>handleOpenModal({_id,title,description})}>
           Edit
         </Button>
         <Button size="small" color="secondary">
