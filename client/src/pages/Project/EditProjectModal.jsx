@@ -12,6 +12,7 @@ import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import { useState, forwardRef, useImperativeHandle,useContext } from 'react';
 import { ProjectContext } from 'contexts/ProjectContext';
+import { NotificationContext } from 'contexts/NotificationContext';
 
 const styles = (theme) => ({
   root: {
@@ -59,6 +60,8 @@ function EditProjectModal(_,ref) {
   const [open, setOpen] = useState(false);
   const [data,setData] = useState({id:'',title:'',description:''})
   const [id, setId] = useState(null);
+
+  const { addNotification } = useContext(NotificationContext);
   const handleClose = () => {
     setOpen(false);
   };
@@ -90,16 +93,19 @@ function EditProjectModal(_,ref) {
                 if (response.success) {
                   getAllProject();
                   handleClose();
+
+                  addNotification(response)
                 } else {
-                  console.log('error: ', response.message);
+                  addNotification(response)
                 }
               } else {
                 const response = await addProject(values);
                 if (response.success) {
                   getAllProject();
                   handleClose();
+                  addNotification(response)
                 } else {
-                  console.log('error: ', response.message);
+                  addNotification(response)
                 }
               }
             }}

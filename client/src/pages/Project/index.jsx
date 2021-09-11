@@ -40,7 +40,7 @@ export default function ProjectPage() {
     <>
       <Container className={classes.root}>
         {loading ? <Loading /> :
-          !project || project.length === 0 ? "no project is here" :
+          !project || project.length === 0 ? "no project in here" :
             <Grid container spacing={3}>
               {project.map(item => <Grid item xs={12} sm={6} md={4} lg={3}>
                 <ProjectItem

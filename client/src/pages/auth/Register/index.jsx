@@ -4,11 +4,13 @@ import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { NotificationContext } from 'contexts/NotificationContext';
 
 function RegisterForm() {
 
   const { registerUser } = useContext(AuthContext);
   const history = useHistory();
+  const { addNotification } = useContext(NotificationContext);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email(),
@@ -31,9 +33,10 @@ function RegisterForm() {
           console.log('value before submit = ', values);
           const response = await registerUser(values);
           if (response.success) {
+            addNotification(response)
             history.push('/project');
           } else {
-            console.log(response.message);
+            addNotification(response);
           }
         }}
 

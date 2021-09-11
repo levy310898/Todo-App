@@ -5,9 +5,11 @@ import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { NotificationContext } from 'contexts/NotificationContext';
 function LoginForm() {
   const [rememberCheck, setRememberCheck] = useState(false);
   const { loginUser } = useContext(AuthContext);
+  const { addNotification } = useContext(NotificationContext);
   const history = useHistory();
 
   const validationSchema = Yup.object().shape({
@@ -24,10 +26,10 @@ function LoginForm() {
         onSubmit={ async (values, _) => {
           const response = await loginUser(values);
           if (response.success) {
-            
+            addNotification(response);
             history.push('/project');
           } else {
-            //error message;
+            addNotification(response)
           }
         }}
 

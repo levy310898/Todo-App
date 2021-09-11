@@ -5,9 +5,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState, forwardRef, useImperativeHandle,useContext } from 'react';
 import { ProjectContext } from 'contexts/ProjectContext';
+import { NotificationContext } from 'contexts/NotificationContext';
 function ConfirmDeleteModal(_,ref) {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(null);
+
+  const { addNotification } = useContext(NotificationContext);
 
   const { deleteProject,getAllProject } = useContext(ProjectContext);
   
@@ -28,9 +31,10 @@ function ConfirmDeleteModal(_,ref) {
     if (response.success) {
       try {
         handleClose();
+        addNotification(response)
         getAllProject();
       } catch (error) {
-        console.log('something wrong');
+        addNotification(response);
       }
     }
   }
