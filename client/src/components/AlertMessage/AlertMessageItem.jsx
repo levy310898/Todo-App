@@ -32,6 +32,7 @@ export default function TransitionAlerts({id,type='success',message}) {
         if (prev < 100) return prev + 1;
         // when 100% , close alert
         handleClose();
+        clearInterval(intervalId);
         return prev;
       })
     }, 30);// 3s sau là 100%;

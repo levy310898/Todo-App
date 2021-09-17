@@ -87,7 +87,6 @@ function EditProjectModal(_,ref) {
 
             initialValues={data}
             onSubmit={async (values, _) => {
-              console.log('value before submit = ', values);
               if (id) {
                 const response = await updateProject(id,values);
                 if (response.success) {

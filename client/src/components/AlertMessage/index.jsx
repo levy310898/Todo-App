@@ -18,7 +18,6 @@ export default function AlertMessage() {
   const { notificationState } = useContext(NotificationContext);
 
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       

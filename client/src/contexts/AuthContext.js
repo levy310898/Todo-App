@@ -73,7 +73,6 @@ export default function AuthProvider({children}) {
   const registerUser = async registerData => {
     try {
       const api = `${apiUrl}/auth/register`;
-      console.log(apiUrl);
       const response = await axios.post(api, registerData);
       if (response.data.success) {
         localStorage.setItem(localStorageTokenName, response.data.accessToken);

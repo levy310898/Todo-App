@@ -34,7 +34,7 @@ export default function ProjectProvider({ children }) {
         return response.data
       }
     } catch (error) {
-      if (error.response.data) console.log(error.response.data);
+      if (error.response.data) return (error.response.data);
       else return { success: false, message: 'something wrong' };
     }
     
@@ -60,7 +60,7 @@ export default function ProjectProvider({ children }) {
         return response.data
       }
     } catch (error) {
-      if (error.response.data) console.log(error.response.data);
+      if (error.response.data) return (error.response.data);
       else return { success: false, message: 'something wrong' };
     }
 

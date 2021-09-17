@@ -44,7 +44,6 @@ router.get('/', authToken, async(req, res) => {
   const user = req.user;
   try {
     const projects = await Project.find({ userId: user.id });
-    console.log('project = ', projects);
     return res.status(200).json({ success: true, message: 'Get project successfully!!!',data:projects })
   } catch (error) {
     console.log(error.message)
@@ -83,7 +82,6 @@ router.put('/:id',
         }
       )
       if (!project) return res.status(401).json({ success: false, message: "Update Project fail!!!" });
-      console.log('project = ', project);
       // all good.
 
       return res.status(200).json({ success: true, message: 'Update Project successfully!!!' })

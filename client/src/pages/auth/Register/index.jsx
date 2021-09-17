@@ -30,7 +30,6 @@ function RegisterForm() {
         initialValues={{ email: '', password: '' }}
         onSubmit={async (values, props) => {
           delete values.passwordConfirm;
-          console.log('value before submit = ', values);
           const response = await registerUser(values);
           if (response.success) {
             addNotification(response)
