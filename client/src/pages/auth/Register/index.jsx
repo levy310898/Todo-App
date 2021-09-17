@@ -1,16 +1,18 @@
-import React, { useContext} from 'react'
+import React, { useContext,useState} from 'react'
 import { TextField, Button, Typography, Link } from '@material-ui/core';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 import { NotificationContext } from 'contexts/NotificationContext';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 function RegisterForm() {
 
   const { registerUser } = useContext(AuthContext);
   const history = useHistory();
   const { addNotification } = useContext(NotificationContext);
+  const [loading,setLoading] = useState(false);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email(),
@@ -29,12 +31,16 @@ function RegisterForm() {
 
         initialValues={{ email: '', password: '' }}
         onSubmit={async (values, props) => {
+          setLoading(true);
+
           delete values.passwordConfirm;
           const response = await registerUser(values);
           if (response.success) {
+            setLoading(false);
             addNotification(response)
             history.push('/project');
           } else {
+            setLoading(false);
             addNotification(response);
           }
         }}
@@ -63,9 +69,16 @@ function RegisterForm() {
 
               <Field as={TextField} label="Họ tên" name="name" placeholder="Nhập họ tên" fullWidth required />
               <ErrorMessage name="name" component="div" />
-              <Button type = 'submit' variant="contained" color="primary" fullWidth style={{ marginBottom: '16px' }}>
-              Đăng ký
-              </Button>
+              <LoadingButton
+              type = 'submit'
+              color = "primary"
+              fullWidth style={{ marginBottom: '16px' }}
+              loading={loading}
+              loadingPosition="end"
+              variant="contained"
+            >
+              Đăng nhập
+            </LoadingButton>
             </Form>
           )
         }}

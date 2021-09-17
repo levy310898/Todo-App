@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import { useState, forwardRef, useImperativeHandle,useContext } from 'react';
 import { ProjectContext } from 'contexts/ProjectContext';
 import { NotificationContext } from 'contexts/NotificationContext';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const styles = (theme) => ({
   root: {
@@ -61,6 +62,9 @@ function EditProjectModal(_,ref) {
   const [data,setData] = useState({id:'',title:'',description:''})
   const [id, setId] = useState(null);
 
+  const [loading,setLoading] = useState(false);
+
+
   const { addNotification } = useContext(NotificationContext);
   const handleClose = () => {
     setOpen(false);
@@ -87,23 +91,28 @@ function EditProjectModal(_,ref) {
 
             initialValues={data}
             onSubmit={async (values, _) => {
+              setLoading(true);
               if (id) {
                 const response = await updateProject(id,values);
                 if (response.success) {
+                  setLoading(false);
                   getAllProject();
                   handleClose();
 
                   addNotification(response)
                 } else {
+                  setLoading(false);
                   addNotification(response)
                 }
               } else {
                 const response = await addProject(values);
                 if (response.success) {
+                  setLoading(false);
                   getAllProject();
                   handleClose();
                   addNotification(response)
                 } else {
+                  setLoading(false);
                   addNotification(response)
                 }
               }
@@ -122,9 +131,14 @@ function EditProjectModal(_,ref) {
                   <ErrorMessage name="description" component="div" />
 
                   <div style = {{display:'flex',justifyContent:'flex-end'}}>
-                    <Button type = "submit" color="primary">
-                      Save changes
-                    </Button>
+                    <LoadingButton
+                    type = 'submit'
+                    color = "primary"
+                    loading={loading}
+                    // variant="outlined"
+                    >
+                    Save changes
+                  </LoadingButton>
 
                     <Button onClick={handleClose} color="secondary">
                       Cancel

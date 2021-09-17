@@ -6,11 +6,15 @@ import * as Yup from 'yup';
 import { AuthContext } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 import { NotificationContext } from 'contexts/NotificationContext';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 function LoginForm() {
   const [rememberCheck, setRememberCheck] = useState(false);
   const { loginUser } = useContext(AuthContext);
   const { addNotification } = useContext(NotificationContext);
   const history = useHistory();
+
+  const [loading,setLoading] = useState(false);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email(),
@@ -24,11 +28,14 @@ function LoginForm() {
 
         initialValues={{ email: '', password: '' }}
         onSubmit={ async (values, _) => {
+          setLoading(true);
           const response = await loginUser(values);
           if (response.success) {
+            setLoading(false);
             addNotification(response);
             history.push('/project');
           } else {
+            setLoading(false);
             addNotification(response)
           }
         }}
@@ -78,9 +85,17 @@ function LoginForm() {
                 control={<Checkbox checked={rememberCheck} name="rememberCheck" onChange={() => setRememberCheck(!rememberCheck)} />}
                 label="remember me"
               />
-              <Button type = 'submit' variant="contained" color="primary" fullWidth style={{ marginBottom: '16px' }}>
+
+              <LoadingButton
+              type = 'submit'
+              color = "primary"
+              fullWidth style={{ marginBottom: '16px' }}
+              loading={loading}
+              loadingPosition="end"
+              variant="contained"
+            >
               Đăng nhập
-              </Button>
+            </LoadingButton>
             </Form>
           )
         }}

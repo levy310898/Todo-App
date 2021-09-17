@@ -6,6 +6,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState, forwardRef, useImperativeHandle,useContext } from 'react';
 import { ProjectContext } from 'contexts/ProjectContext';
 import { NotificationContext } from 'contexts/NotificationContext';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 function ConfirmDeleteModal(_,ref) {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(null);
@@ -13,7 +15,8 @@ function ConfirmDeleteModal(_,ref) {
   const { addNotification } = useContext(NotificationContext);
 
   const { deleteProject,getAllProject } = useContext(ProjectContext);
-  
+  const [loading,setLoading] = useState(false);
+
   useImperativeHandle(ref, () => ({
 
     handleOpen(id) {
@@ -27,13 +30,16 @@ function ConfirmDeleteModal(_,ref) {
   };
 
   const handleConfirm = async() => {
+    setLoading(true);
     const response = await deleteProject(id);
     if (response.success) {
       try {
+        setLoading(false);
         handleClose();
         addNotification(response)
         getAllProject();
       } catch (error) {
+        setLoading(false);
         addNotification(response);
       }
     }
@@ -50,9 +56,13 @@ function ConfirmDeleteModal(_,ref) {
       >
         <DialogTitle id="alert-dialog-title">{"You want to delete this project ? "}</DialogTitle>
         <DialogActions>
-          <Button onClick={handleConfirm} color="primary">
+          <LoadingButton
+            onClick={handleConfirm}
+            color = "primary"
+            loading={loading}
+          >
             Confirm
-          </Button>
+          </LoadingButton>
           <Button onClick={handleClose} color="secondary" autoFocus>
             Cancel
           </Button>

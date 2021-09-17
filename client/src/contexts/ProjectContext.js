@@ -31,6 +31,9 @@ export default function ProjectProvider({ children }) {
     try {
       const response = await axios.post(`${apiUrl}/project`, data);
       if (response.data.success) {
+        dispatch({
+          type:'CHANGE_SUCCESS',
+        })
         return response.data
       }
     } catch (error) {
@@ -44,6 +47,9 @@ export default function ProjectProvider({ children }) {
     try {
       const response = await axios.put(`${apiUrl}/project/${id}`, data);
       if (response.data.success) {
+        dispatch({
+          type:'CHANGE_SUCCESS',
+        })
         return response.data
       }
     } catch (error) {
@@ -57,6 +63,9 @@ export default function ProjectProvider({ children }) {
     try {
       const response = await axios.delete(`${apiUrl}/project/${id}`);
       if (response.data.success) {
+        dispatch({
+          type:'CHANGE_SUCCESS',
+        })
         return response.data
       }
     } catch (error) {

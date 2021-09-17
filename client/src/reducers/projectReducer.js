@@ -8,6 +8,12 @@ export const projectReducer = (state, action) => {
         project: payload,
         loading:false
       }
+    
+    case "CHANGE_SUCCESS":
+      return {
+        ...state,
+        loading:true,
+      }
 
     default:
       return state
